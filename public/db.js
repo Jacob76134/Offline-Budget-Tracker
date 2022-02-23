@@ -18,15 +18,21 @@ request.onsuccess = (event) => {
     }
 };
 
+const saveRecord = (record) => {
+    const transaction = db.transaction(["offlineDB"], "readwrite");
+    const store = transaction.objectStore("offlineDB");
+    store.add(record);
+};
+
 function checkDB() {
     console.log('Checking database...');
-    let transaction = db.transaction(["offlineDB"], "readwrite");
+    const transaction = db.transaction(["offlineDB"], "readwrite");
     
-    const store = transaction.createObjectStore("offlineDB");
-    const getDB = store.getDB();
+    const store = transaction.objectStore("offlineDB");
+    const getAll = store.getAll();
     
 
-    getDB.onsuccess = () => {
+    getAll.onsuccess = () => {
         if (getAll.result.length > 0) {
 			fetch("/api/transaction/bulk", {
 				method: "POST",
@@ -41,18 +47,11 @@ function checkDB() {
             })
             .then (() => {
                 const transaction = db.transaction(["offlineDB"], "readwrite");
-                const curStore = transaction.ObjectStore('offlineDB');
-                curStore.clear();
+                const Store = transaction.ObjectStore('offlineDB');
+                Store.clear();
             })
         }
     }
 }
-
-
-const saveRecord = (record) => {
-    const transaction = db.transaction(["offlineDB"], "readwrite");
-    const store = transaction.objectStore("offlineDB");
-    store.add(record);
-};
 
 window.addEventListener("online", checkDB);

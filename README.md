@@ -1,5 +1,5 @@
 # budget-tracker
-![license badge](https://img.shields.io/github/license/jacob76134/budget-tracker)
+![license badge](https://img.shields.io/github/license/jacob76134/offline-budget-tracker)
 ## Description
 This project is a pwa budget tracker that can save your edits offline using cache with indexedb
 ## Table of Contents
